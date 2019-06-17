@@ -10,6 +10,14 @@
       * [1.3.2 数据清洗](#132-数据清洗)
       * [1.3.3 拆分点评字段](#133-拆分点评字段)
       * [1.3.4 解析数据](#134-解析数据)
+* [2 基于Python的算法函数创建](#2-基于Python的算法函数创建)
+   * [2.1 项目要求](#2.1-项目要求)
+   * [2.2 习题](#2.2-习题)
+      * [2.2.1 无重复数字](#2.2.1-无重复数字)
+      * [2.4.2 排序](#2.4.5-排序)
+      * [2.2.3 统计字符个数](#2.2.3-统计字符个数)
+      * [2.2.4 猴子吃桃问题](#2.2.4-猴子吃桃问题)
+      * [2.4.5 猜数字问题](#2.4.5-猜数字问题)
 
 ## 1 商铺数据加载及存储
 
@@ -73,11 +81,13 @@ print(data.head())
 # 简单清洗，去除多余的空格
 remove_blank=lambda x:str(x).replace(" ","")   # 简单删除空格
 ```
+<\br>
 (2) 提取评论人数,涉及字符串分割知识即str.split(特定字符):
 ```python
 # 清洗评论人数
 remove_blank_com=lambda x:int(str(x).replace(" ","").split("条")[0]) if "条" in str(x) else None     # 提取评论人数
 ```
+<\br>
 (3) 这里想法是将中文一到五转化为阿拉伯数字1到5,并不考虑准N星与N星的区别,即星级只有整数无小数情况,具体实现过程为构建一一对应的字典,并将原始数据与字典的键进行匹配:
 ```python
 # 清洗星级
@@ -95,6 +105,7 @@ def get_star(x):
     return None
 remove_blank_star=lambda x:get_star(str(x))
 ```
+<\br>
 (4) 清洗价格主要是提取文本信息中的数字部分,并剔除货币符号:
 ```python
 # 清洗价格
@@ -106,6 +117,7 @@ import re
 pattern_price=re.compile(r'\d+\.*\d+')     # 提取价格,包含整数和小数形式
 remove_blank_pri=lambda x:round(float(pattern_price.findall(x)[0]),2) if pattern_price.findall(x) else None   # 提取价钱
 ```
+<\br>
 (5) 点评详情数据中有大量多余空格并且数量不一致,因此可以通过以下匿名函数实现清洗工作,该函数为经验得到无特殊思路:
 ```python
 # 清洗点评详情
@@ -170,4 +182,148 @@ print(st)
 ```
 
 [项目链接](https://github.com/Jnewgeek/python_minor_project/tree/master/%E9%A1%B9%E7%9B%AE1_%E5%95%86%E9%93%BA%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%AD%98%E5%82%A8 "商铺数据加载及存储")<br/>
+[返回目录](#目录 "返回目录")
+
+
+## 2 基于Python的算法函数创建
+
+### 2.1 项目要求
+1. 根据题意完成函数的创建实现相应的功能。
+
+### 2.2 习题
+
+#### 2.2.1 无重复数字 
+有1、2、3、4共四个数字，能组成多少个互不相同且无重复数字的两位数？都是多少？
+
+排列组合公式:
+$ C_{4}^2 = 12 $
+
+<\br>
+代码实现(构建集合,嵌套循环):
+```python
+num=set()
+for i in range(1,5):
+    for j in range(1,5):
+        num.add(i*10+j)
+
+print("互不相同的两位数个数: ",len(num))
+print("分别是: \n",sorted(num))
+```
+
+#### 2.2.2 排序
+输入三个整数x,y,z，请把这三个数由小到大输出。
+> 提示：判断是否为数字：.isdigit()
+> 该题目需要创建函数
+<\br>
+
+代码实现:
+```python
+def my_sort(x,y,z):
+    '''
+    从小到大
+    '''
+    if x.isdigit() and y.isdigit() and z.isdigit():
+        x,y,z=int(x),int(y),int(z)
+        if y<=x:
+            x,y=y,x
+        if z<=x:
+            x,z=z,x
+        if z<=y:
+            y,z=z,y
+        return x,y,z
+    else:
+        return None,None,None
+
+xx=input("请输入3个整数(','隔开):").split(",")
+x,y,z=my_sort(xx[0],xx[1],xx[2])
+if x==None:
+    print("输入数据格式错误!")
+else:
+    print("从小到大输出为: %d,%d,%d"%(x,y,z))
+```
+
+#### 2.2.3 统计字符个数
+输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数。
+字符类型判断函数:
+1. is.alpha() 是否是字母
+2. is.digit() 是否是数字
+3. 正则表达式: 
+    * '\d'(数字)等价于[0-9],'\D'(非数字)
+    * '\w'(字母或数字或下划线或汉字,能否显示汉字取决于操作系统)等价于,'\W'(非可显示字符)
+    * '\s'(空白字符),'\S'(非空白字符)
+<\br>
+代码实现:
+```python
+def count_str(x):
+    # 字母个数
+    alpha_cnt=sum(i.isalpha() for i in x)
+    # 空格
+    blank_cnt=sum(i==" " for i in x)
+    # 数字
+    digit_cnt=sum(i.isdigit() for i in x)
+    # 其他
+    others_cnt=len(x)-alpha_cnt-blank_cnt-digit_cnt
+    print('''
+    总个数: %d
+    字母个数: %d
+    空格个数: %d
+    数字个数: %d
+    其他个数: %d
+    '''%(len(x),alpha_cnt,blank_cnt,digit_cnt,others_cnt))
+
+count_str("Jghjadjg dgh dghg;;%$^hdh  267 277h267  gsu")
+```
+
+#### 2.2.4 猴子吃桃问题
+猴子第一天摘下若干个桃子，当即吃了一半，还不瘾，又多吃了一个,第二天早上又将剩下的桃子吃掉一半，又多吃了一个。 
+以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少?
+> 提示：采取逆向思维的方法，从后往前推断。
+> 该题目不需要创建函数
+<br/>
+代码实现:
+```python
+peach_after=1
+for i in range(9,0,-1):
+    peach_before=(peach_after+1)*2
+    print("第{}天，总数{}个，剩余{}个".format(i,peach_before,peach_after))
+    peach_after=peach_before
+print(peach_before)
+```
+
+#### 2.4.5 猜数字问题
+1. 随机生成一个整数
+2. 猜一个数字并输入
+3. 判断是大是小，直到猜正确
+4. 判断时间
+> 提示：需要用time模块、random模块
+```python
+import time
+import random
+
+num=random.randint(1,100)
+print("游戏开始!请输入1到100内的整数:\n")
+time1=time.mktime(time.localtime())
+
+cnt=1
+while True:
+    x=input(">> 第%d次尝试: "%(cnt))
+    cnt+=1
+    time2=time.mktime(time.localtime())
+    timestamp=time2-time1
+    m, s = divmod(timestamp, 60)
+    h, m = divmod(m, 60)
+    difftime = "%02d时%02d分%02d秒" % (h, m, s)
+    if x.isdigit():
+        x=int(x)
+        if x==num:
+            time2=time.localtime()
+            print("正确！耗时: {}".format(difftime))
+            break
+        elif x>num:
+            print("太大了！")
+        else:
+            print("太小了！")
+```
+
+[项目链接](https://github.com/Jnewgeek/python_minor_project/tree/master/%E9%A1%B9%E7%9B%AE1_%E5%95%86%E9%93%BA%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%AD%98%E5%82%A8 "基于Python的算法函数创建")<br/>
 [返回目录](#目录 "返回目录")
