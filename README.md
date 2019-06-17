@@ -81,13 +81,13 @@ print(data.head())
 # 简单清洗，去除多余的空格
 remove_blank=lambda x:str(x).replace(" ","")   # 简单删除空格
 ```
-<\br>
+<br/>
 (2) 提取评论人数,涉及字符串分割知识即str.split(特定字符):
 ```python
 # 清洗评论人数
 remove_blank_com=lambda x:int(str(x).replace(" ","").split("条")[0]) if "条" in str(x) else None     # 提取评论人数
 ```
-<\br>
+<br/>
 (3) 这里想法是将中文一到五转化为阿拉伯数字1到5,并不考虑准N星与N星的区别,即星级只有整数无小数情况,具体实现过程为构建一一对应的字典,并将原始数据与字典的键进行匹配:
 ```python
 # 清洗星级
@@ -105,7 +105,7 @@ def get_star(x):
     return None
 remove_blank_star=lambda x:get_star(str(x))
 ```
-<\br>
+<br/>
 (4) 清洗价格主要是提取文本信息中的数字部分,并剔除货币符号:
 ```python
 # 清洗价格
@@ -117,7 +117,7 @@ import re
 pattern_price=re.compile(r'\d+\.*\d+')     # 提取价格,包含整数和小数形式
 remove_blank_pri=lambda x:round(float(pattern_price.findall(x)[0]),2) if pattern_price.findall(x) else None   # 提取价钱
 ```
-<\br>
+<br/>
 (5) 点评详情数据中有大量多余空格并且数量不一致,因此可以通过以下匿名函数实现清洗工作,该函数为经验得到无特殊思路:
 ```python
 # 清洗点评详情
@@ -149,8 +149,8 @@ data["服务"]=pd.Series(map(lambda x:round(float(str(x).split(",")[2][2:]),1),d
 #data=data[['classify', 'name', 'comment', 'star', 'price', 'address',"口味","环境","服务"]]
 print(data.head())
 ```
-或者采用以下更为简洁的形式,其中enumerate()为枚举类型,返回结果为一个元组——(index,value),代表了索引位置和实际值:
 
+或者采用以下更为简洁的形式,其中enumerate()为枚举类型,返回结果为一个元组——(index,value),代表了索引位置和实际值:
 ```python
 def new_comm(x,i=0):
     # 以逗号分割，取第i个，再截取3位之后的数字并转换数据类型
@@ -196,11 +196,10 @@ print(st)
 有1、2、3、4共四个数字，能组成多少个互不相同且无重复数字的两位数？都是多少？
 
 排列组合公式:<br/>
-$ C_{4}^2 = 12 $
+$$ C_{4}^2 = 12 $$
 
 
 代码实现(构建集合,嵌套循环):
-
 ```python
 num=set()
 for i in range(1,5):
@@ -218,7 +217,6 @@ print("分别是: \n",sorted(num))
 
 
 代码实现:
-
 ```python
 def my_sort(x,y,z):
     '''
@@ -255,7 +253,6 @@ else:
     * '\s'(空白字符),'\S'(非空白字符)
 
 代码实现:
-
 ```python
 def count_str(x):
     # 字母个数
@@ -284,7 +281,6 @@ count_str("Jghjadjg dgh dghg;;%$^hdh  267 277h267  gsu")
 > 该题目不需要创建函数
 
 代码实现:
-
 ```python
 peach_after=1
 for i in range(9,0,-1):
@@ -302,7 +298,6 @@ print(peach_before)
 > 提示：需要用time模块、random模块
 
 代码实现:
-
 ```python
 import time
 import random
