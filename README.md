@@ -195,11 +195,12 @@ print(st)
 #### 2.2.1 无重复数字 
 有1、2、3、4共四个数字，能组成多少个互不相同且无重复数字的两位数？都是多少？
 
-排列组合公式:
+排列组合公式:<br/>
 $ C_{4}^2 = 12 $
 
-<\br>
+
 代码实现(构建集合,嵌套循环):
+
 ```python
 num=set()
 for i in range(1,5):
@@ -214,9 +215,10 @@ print("分别是: \n",sorted(num))
 输入三个整数x,y,z，请把这三个数由小到大输出。
 > 提示：判断是否为数字：.isdigit()
 > 该题目需要创建函数
-<\br>
+
 
 代码实现:
+
 ```python
 def my_sort(x,y,z):
     '''
@@ -251,8 +253,9 @@ else:
     * '\d'(数字)等价于[0-9],'\D'(非数字)
     * '\w'(字母或数字或下划线或汉字,能否显示汉字取决于操作系统)等价于,'\W'(非可显示字符)
     * '\s'(空白字符),'\S'(非空白字符)
-<\br>
+
 代码实现:
+
 ```python
 def count_str(x):
     # 字母个数
@@ -279,8 +282,9 @@ count_str("Jghjadjg dgh dghg;;%$^hdh  267 277h267  gsu")
 以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少?
 > 提示：采取逆向思维的方法，从后往前推断。
 > 该题目不需要创建函数
-<br/>
+
 代码实现:
+
 ```python
 peach_after=1
 for i in range(9,0,-1):
@@ -296,6 +300,9 @@ print(peach_before)
 3. 判断是大是小，直到猜正确
 4. 判断时间
 > 提示：需要用time模块、random模块
+
+代码实现:
+
 ```python
 import time
 import random
@@ -325,5 +332,5 @@ while True:
             print("太小了！")
 ```
 
-[项目链接](https://github.com/Jnewgeek/python_minor_project/tree/master/%E9%A1%B9%E7%9B%AE1_%E5%95%86%E9%93%BA%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%AD%98%E5%82%A8 "基于Python的算法函数创建")<br/>
+[项目链接](https://github.com/Jnewgeek/python_minor_project/tree/master/%E9%A1%B9%E7%9B%AE2_%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E7%AE%97%E6%B3%95%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA "基于Python的算法函数创建")<br/>
 [返回目录](#目录 "返回目录")
