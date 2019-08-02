@@ -1,0 +1,9 @@
+数据链接: https://book.douban.com/subject_search?search_text=%E6%95%B0%E6%8D%AE&cat=1001
+
+参数含义:
+    1)cat: 类别,如: 1001代表书籍，1002代表电影
+    2）q: 关键词,包含中文信息需要使用 parse.quote()进行url编码
+
+使用方式:
+    1)可使用任意能够执行py脚本的IDE上运行py文件
+    2）windows系统直接双击运行start.bat即可
